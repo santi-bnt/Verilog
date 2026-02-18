@@ -8,7 +8,6 @@ This project converts a binary number into **4 decimal digits** (units, tens, hu
 - **Testbench** with random inputs + **VCD waveform**
 - Optional **FPGA wrapper** (switches → HEX displays)
 
----
 
 ## Files
 - `BCD.v`  
@@ -31,7 +30,6 @@ This project converts a binary number into **4 decimal digits** (units, tens, hu
 - `BCD_4display_w.v` (optional)  
   Wrapper example for FPGA boards (e.g., `SW[9:0]` → `HEX0..HEX3`).
 
----
 
 ## Module I/O
 
@@ -43,13 +41,11 @@ This project converts a binary number into **4 decimal digits** (units, tens, hu
 - `D_un, D_de, D_ce, D_mi [6:0]`  
   7-segment patterns for units, tens, hundreds, thousands.
 
----
 
 ## 7-Segment Encoding
 `BCD.v` outputs a 7-bit segment pattern. Depending on your hardware (common anode/common cathode), you may need **active-low** (inverted) or **active-high** patterns.  
 If your display looks inverted, invert the outputs (or swap the table).
 
----
 
 ## Simulation (Icarus Verilog)
 
