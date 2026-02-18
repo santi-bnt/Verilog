@@ -29,7 +29,7 @@ The `num_primos` module uses a `case` statement to set:
 
 ## Simulation
 
-### Option A: Icarus Verilog + GTKWave
+###  Icarus Verilog + GTKWave
 ```bash
 iverilog -o sim num_primos.v num_primos_tb.v
 vvp sim
