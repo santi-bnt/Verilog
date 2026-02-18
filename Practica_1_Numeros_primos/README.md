@@ -1,41 +1,35 @@
-# Práctica 1 — Números primos 
+# Practice 1 — Prime Numbers
 
-## Objetivo
-Implementar un sistema en Verilog que lea el valor de **4 switches** de la FPGA, interprete su valor como un número binario (0 a 15) y determine si es **número primo**.  
-El resultado se mostrará encendiendo un **LED**.
+## Goal
+Implement a Verilog system that reads the value of **4 FPGA switches**, interprets it as a binary number (0 to 15), and determines whether it is a **prime number**.  
+The result is shown by turning **an LED** on or off.
 
-
-## ¿Qué se considera primo en este rango?
-En el rango de 0 a 15, los números primos son:
+## What counts as prime in this range?
+In the range from 0 to 15, the prime numbers are:
 
 **2, 3, 5, 7, 11, 13**
 
-Para cualquier otro valor (incluyendo 0 y 1), la salida debe ser **0**.
+For any other value (including 0 and 1), the output must be **0**.
 
+## Inputs and Output
+- **Input:** `N[3:0]` (binary number from switches)
+- **Output:** `out` (1 = prime, 0 = not prime)
 
-
-## Entradas y salida
-- **Entrada:** `N[3:0]` (número en binario desde switches)
-- **Salida:** `out` (1 = es primo, 0 = no es primo)
-
-
-## Archivos
+## Files
 - `num_primos.v`  
-  Módulo combinacional que activa `out` cuando `N` es primo.
+  Combinational module that sets `out` high when `N` is prime.
 
 - `num_primos_tb.v`  
-  Testbench que prueba todos los valores de `N` de 0 a 15, imprime resultados y genera un archivo de ondas `.vcd`.
+  Testbench that tests all values of `N` from 0 to 15, prints results, and generates a `.vcd` waveform file.
 
+## How the module works
+The `num_primos` module uses a `case` statement to set:
+- `out = 1` when `N` is 2, 3, 5, 7, 11, or 13
+- `out = 0` for any other case
 
-## ¿Cómo funciona el módulo?
-El módulo `num_primos` usa un `case` para poner:
-- `out = 1` cuando `N` es 2, 3, 5, 7, 11 o 13
-- `out = 0` en cualquier otro caso
+## Simulation
 
-
-## Simulación
-
-### Opción A: Icarus Verilog + GTKWave
+### Option A: Icarus Verilog + GTKWave
 ```bash
 iverilog -o sim num_primos.v num_primos_tb.v
 vvp sim
