@@ -1,145 +1,145 @@
-# Practica 3 – Contador Up/Down con Load y Display 4x7-Segmentos (MAX10)
+# Lab 3 – Up/Down Counter with Load and 4×7-Segment Display (MAX10)
 
-Este proyecto implementa un sistema digital en Verilog para una FPGA **Intel MAX10** que incluye:
-- Un **divisor de reloj** para bajar la frecuencia del clock principal.
-- Un **contador** con modo **incremento/decremento (up/down)**.
-- Una función de **carga (load)** para cargar un valor desde switches.
-- Un módulo para mostrar el valor del contador en **4 displays de 7 segmentos** (unidades, decenas, centenas y millares).
+This project implements a digital system in Verilog for an **Intel MAX10** FPGA that includes:
+- A **clock divider** to slow down the main FPGA clock.
+- An **up/down counter** (increment/decrement mode).
+- A **load** feature to load a value from switches.
+- A module to display the counter value on **four 7-segment displays** (units, tens, hundreds, thousands).
 
 ---
 
-## Estructura de módulos
+## Module Structure
 
 ### 1) `clk_divide`
-**Objetivo:** generar un reloj lento (`clk_div`) a partir del reloj principal de la FPGA.
+**Goal:** generate a slow clock (`clk_div`) from the FPGA main clock.
 
-- Entradas:
-  - `clk`: reloj base (ej. 50 MHz).
-  - `rst`: reset asíncrono.
-- Salida:
-  - `clk_div`: reloj dividido.
+- Inputs:
+  - `clk`: base clock (e.g., 50 MHz)
+  - `rst`: asynchronous reset
+- Output:
+  - `clk_div`: divided clock
 
-**Parámetros:**
-- `CLK_FREQ`: frecuencia del reloj base (por defecto `50_000_000`).
-- `FREQ`: frecuencia deseada para el reloj dividido (por defecto `5` Hz aprox).
+**Parameters:**
+- `CLK_FREQ`: base clock frequency (default `50_000_000`)
+- `FREQ`: target divided frequency (default ~`5` Hz)
 
 ---
 
 ### 2) `count`
-**Objetivo:** contador de 8 bits con:
-- **Reset** → pone el contador en 0
-- **Load** (activo cuando `load == 0`) → carga `data_in` (con límite máximo)
+**Goal:** 8-bit counter with:
+- **Reset** → sets the counter to 0
+- **Load** (active when `load == 0`) → loads `data_in` (with a maximum limit)
 - **Up/Down**:
-  - `up_down = 0` incrementa
-  - `up_down = 1` decrementa
+  - `up_down = 0` increments
+  - `up_down = 1` decrements
 - **Wrap-around**:
-  - Si sube y llega a 100 → vuelve a 0
-  - Si baja y llega a 0 → vuelve a 100
-- **Saturación al cargar**:
-  - si `data_in > 100`, se carga `100`
-  - si no, se carga `data_in`
+  - When counting up and reaching 100 → wraps to 0
+  - When counting down and reaching 0 → wraps to 100
+- **Load saturation**:
+  - if `data_in > 100`, it loads `100`
+  - otherwise it loads `data_in`
 
-**Entradas:**
+**Inputs:**
 - `clk`, `rst`
 - `up_down`
 - `load`
 - `data_in[6:0]`
 
-**Salida:**
+**Output:**
 - `counter[7:0]`
 
 ---
 
 ### 3) `BCD_4display`
-**Objetivo:** convertir un número binario de entrada a 4 dígitos BCD (unidades, decenas, centenas, millares) y mandarlos a 4 displays.
+**Goal:** convert a binary input number into 4 BCD digits (units, tens, hundreds, thousands) and drive four 7-seg displays.
 
-**Entradas:**
-- `bcd_in` (por defecto 10 bits, pero se conecta al `counter`)
+**Input:**
+- `bcd_in` (default 10 bits, connected to the counter value)
 
-**Salidas:**
-- `D_un`, `D_de`, `D_ce`, `D_mi` (cada una es un bus de 7 bits para un display)
+**Outputs:**
+- `D_un`, `D_de`, `D_ce`, `D_mi` (each is a 7-bit bus for one display)
 
-**Funcionamiento:**
-- Calcula:
-  - `unidades = bcd_in % 10`
-  - `decenas = (bcd_in/10) % 10`
-  - `centenas = (bcd_in/100) % 10`
-  - `milares = (bcd_in/1000) % 10`
-- Luego manda cada dígito a un módulo `BCD` para obtener el patrón de 7 segmentos.
+**How it works:**
+- Computes:
+  - `units = bcd_in % 10`
+  - `tens = (bcd_in / 10) % 10`
+  - `hundreds = (bcd_in / 100) % 10`
+  - `thousands = (bcd_in / 1000) % 10`
+- Each digit is then sent to a `BCD` module to generate the 7-segment pattern.
 
-> Nota: el módulo `BCD` (dígito BCD → 7 segmentos) debe existir en tu proyecto para que compile.
+> Note: the `BCD` module (BCD digit → 7-segment outputs) must be included in the project to compile.
 
 ---
 
 ### 4) `main`
-**Objetivo:** integrar el sistema completo:
-- divide el reloj
-- ejecuta el contador
-- manda el valor del contador a los 4 displays
+**Goal:** integrate the full system:
+- divides the clock
+- runs the counter
+- sends the counter value to the 4 displays
 
-**Entradas:**
+**Inputs:**
 - `clk`
 - `rst`
 - `up_down`
 - `load`
 - `data_in[6:0]`
 
-**Salidas:**
+**Outputs:**
 - `D_un`, `D_de`, `D_ce`, `D_mi`
 
 ---
 
-### 5) `main_w` (Wrapper para MAX10)
-**Objetivo:** conectar `main` con los pines típicos de la tarjeta MAX10:
-- `MAX10_CLK1_50` como reloj principal
-- `KEY` como botones
-- `SW` como switches
-- `HEX0..HEX3` como displays
+### 5) `main_w` (MAX10 Wrapper)
+**Goal:** connect `main` to typical MAX10 board pins:
+- `MAX10_CLK1_50` as the main clock
+- `KEY` as push-buttons
+- `SW` as switches
+- `HEX0..HEX3` as the 7-segment displays
 
-**Conexiones usadas:**
+**Connections used:**
 - `clk` → `MAX10_CLK1_50`
-- `rst` → `~KEY[0]` (reset activo en bajo en el botón)
+- `rst` → `~KEY[0]` (active-low reset button)
 - `load` → `KEY[1]`
 - `up_down` → `SW[9]`
 - `data_in` → `SW[6:0]`
 - Displays:
-  - `HEX0` = unidades
-  - `HEX1` = decenas
-  - `HEX2` = centenas
-  - `HEX3` = millares
+  - `HEX0` = units
+  - `HEX1` = tens
+  - `HEX2` = hundreds
+  - `HEX3` = thousands
 
 ---
 
-## Entradas y control (resumen rápido)
+## Inputs and Control (Quick Summary)
 
-- **Reset**: reinicia el contador a 0.
-- **Load (activo en 0)**: carga el valor de `data_in` (limitado a 100).
+- **Reset**: resets the counter to 0.
+- **Load (active-low)**: loads `data_in` into the counter (limited to 100).
 - **Up/Down**:
-  - `0` → cuenta hacia arriba (0 → 100 → 0)
-  - `1` → cuenta hacia abajo (100 → 0 → 100)
+  - `0` → counts up (0 → 100 → 0)
+  - `1` → counts down (100 → 0 → 100)
 
 ---
 
-## Requisitos para compilar
+## Build Requirements
 
-Asegúrate de incluir en tu proyecto:
+Make sure your project includes:
 - `clk_divide.v`
 - `count.v`
 - `BCD_4display.v`
 - `main.v`
 - `main_w.v`
-- **`BCD.v`** (módulo para convertir 4-bit BCD a 7 segmentos)
+- **`BCD.v`** (4-bit BCD to 7-segment decoder)
 
 ---
 
-## Salida esperada
+## Expected Output
 
-El valor actual del contador se mostrará en los 4 displays de 7 segmentos:
-- HEX0: unidades
-- HEX1: decenas
-- HEX2: centenas
-- HEX3: millares
+The current counter value is shown on the four 7-segment displays:
+- HEX0: units
+- HEX1: tens
+- HEX2: hundreds
+- HEX3: thousands
 
-Como el contador se limita a 0–100, normalmente verás valores desde `0000` hasta `0100`.
+Since the counter is limited to 0–100, you will typically see values from `0000` to `0100`.
 
 ---
