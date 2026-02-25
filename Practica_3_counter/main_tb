@@ -1,41 +1,49 @@
-module count(
-	input clk,
-	input rst,
-	input up_down,
-	input load,
-	input [6:0] data_in,
-	output reg [7:0] counter,
-	output reg [7:0] save
+module main_tb (
 );
 
-always @(posedge clk or posedge rst) begin 
-    if (rst)
-        counter <= 0;
-	 else if (load == 0 && data_in == 1)begin
-				save <= counter;	
-				counter <= save;
-			end
-		
-	 else if (load == 0)begin
-				counter <= save;
-				end
-	
-			
-	 else if (up_down == 1) 
-	 
-				begin 
-				if (counter <= 0)
-            counter <= 100;
-				else
-            counter <= counter - 1;
-				end
-	
-	else if 
-			(counter == 100)
-				counter <= 0;
-			else 
-				counter <= counter +1;
-			
+    reg clk;
+	reg rst;
+	reg up_down;
+	reg load;
+	reg  [6:0] data_in;
+	wire [0:6] D_un,D_de,D_ce,D_mi;
+
+
+    main DUT(.clk(clk),
+	 .rst (rst),
+	 .up_down (up_down),
+	 .load (load),
+	 .data_in (data_in), .D_un(D_un),.D_de(D_de),.D_ce(D_ce),.D_mi(D_mi));
+
+   initial begin
+        clk= 0;
+        rst = 0;
+    forever 
+    #10 clk =~clk;
+    end
+
+    initial begin
+    
+    $display("sim iniciada") ;  
+
+    
+    
+    $display("sim finalizada"); 
+    $stop;
+    $finish;
+    end
+  
+
+
+initial begin
+    $monitor("up_down = %b ,load = %b ,data_in = %b,D_un= %b, D_de= %b, D_ce= %b, D_mi = %b, clk = %b", up_down,load,data_in,D_un, D_de, D_ce, D_mi,clk);
 end
+
+initial begin
+    $dumpfile("main_tb.vcd");
+    $dumpvars(0,main_tb);
+
+end
+	 
 
 endmodule
