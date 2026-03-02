@@ -1,6 +1,6 @@
 module clk_divide #(
     parameter FREQ = 50,
-    parameter CLK_FREQ = 50_000_00
+    parameter CLK_FREQ = 50_000_000
 )(
     input clk, 
     input rst,
