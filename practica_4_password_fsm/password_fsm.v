@@ -14,7 +14,7 @@ module password_fsm(
 
 reg[2:0] current_state; //3 bits para 7 estados
 reg[3:0] password_load; //en donde se va a guardar el valor de la password, son 4 bits de los 4 digitos 
-	
+reg next_state;
 
 
 //PASSWORD 
@@ -37,7 +37,7 @@ clk_divider DIVISOR_FRECUENCIA (
 
 //Estados 
 
-reg next_state; 
+
 parameter IDLE=0, DIG1=1, DIG2=2, DIG3=3, DIG4=4, bad= 5, good=6;
 
 //Displays 
@@ -176,5 +176,3 @@ always@(*)
 
 	
 endmodule
-
-
