@@ -23,14 +23,7 @@ module main_tb;
         .D_mi(D_mi)
     );
 
-    // Override parameters for faster simulation
-    // Adjusting CLK_FREQ and FREQ so that the internal clock divider
-    // produces a clock that is fast enough for simulation.
-    // constantnum = CLK_FREQ / (2 * FREQ)
-    // We want constantnum to be small, e.g., 2.
-    // If CLK_FREQ = 100 and FREQ = 25, then constantnum = 2.
-    defparam uut.u_clk_div.CLK_FREQ = 100;
-    defparam uut.u_clk_div.FREQ = 25;
+
 
     initial begin
         clk = 0;
