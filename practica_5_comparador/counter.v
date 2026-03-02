@@ -6,7 +6,6 @@ module counter#(parameter pwm = 50,
 	
 );
 
-clk_divide clock(.rst(rst),.clk(clk_divider));
 
 always @(posedge clk or posedge rst) begin 
     if (rst)
