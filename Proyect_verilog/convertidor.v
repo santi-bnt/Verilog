@@ -3,19 +3,19 @@ module convertidor #(parameter pwm = 50,
     input clk,
     input rst,
 
-   input signed [15:0] data_x_reg,
-   input signed [15:0] data_y_reg,
-   input signed [15:0] data_z_reg,
+   input signed [19:0] data_x_reg,
+   input signed [19:0] data_y_reg,
+   input signed [19:0] data_z_reg,
 
     output reg out_x,
     output reg out_y,
     output reg out_z
 );
 
-wire [15:0] count;
-reg  [15:0] comp_x;
-reg  [15:0] comp_y;
-reg  [15:0] comp_z;
+wire [19:0] count;
+reg  [19:0] comp_x;
+reg  [19:0] comp_y;
+reg  [19:0] comp_z;
 
 counter countersin(.rst(rst), .clk(clk), .counter(count));
 
@@ -28,9 +28,9 @@ wire [7:0] angle_y;
 wire [7:0] angle_z;
 
 
-assign angle_x = 90 + (data_x_reg >>> 4); // desplaza el bit 4 a la derecha
-assign angle_y = 90 + (data_y_reg >>> 4);
-assign angle_z = 90 + (data_z_reg >>> 4);
+assign angle_x = 90 + (data_x_reg >>> 2); // desplaza el bit 4 a la derecha
+assign angle_y = 90 + (data_y_reg >>> 2);
+assign angle_z = 90 + (data_z_reg >>> 2);
 
 always @(posedge clk or posedge rst) begin 
     if (rst) begin
@@ -63,3 +63,4 @@ always @(posedge clk or posedge rst) begin
 end
 
 endmodule
+
