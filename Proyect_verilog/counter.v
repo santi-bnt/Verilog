@@ -2,7 +2,7 @@ module counter#(parameter pwm = 50,
     parameter CLK_FREQ = 50_000_000)(
 	input clk,
 	input rst,
-	output reg [16:0] counter
+	output reg [19:0] counter
 	
 );
 
@@ -20,3 +20,4 @@ always @(posedge clk or posedge rst) begin
 end
 
 endmodule
+
