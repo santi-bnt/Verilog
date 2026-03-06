@@ -12,6 +12,8 @@ module accel (
    input 		          		MAX10_CLK1_50,
    input 		          		MAX10_CLK2_50,
 
+    output [15:0] ARDUINO_IO,
+
    //////////// SEG7 //////////
    output		     [7:0]		HEX0,
    output		     [7:0]		HEX1,
@@ -47,7 +49,7 @@ module accel (
 
    // output data
    wire data_update;
-   wire [15:0] data_x, data_y, data_z;
+   wire [19:0] data_x, data_y, data_z;
 
 //===== Phase-locked Loop (PLL) instantiation. Code was copied from a module
 //      produced by Quartus' IP Catalog tool.
@@ -96,14 +98,25 @@ clk_divide #(.FREQ(2)) DIVISOR_REFRESH
 .clk_div(clk_2_hz)
 );
 
-reg [15:0] data_x_reg, data_y_reg, data_z_reg;
+reg [19:0] data_x_reg, data_y_reg, data_z_reg;
 
 always @(posedge clk_2_hz)
 begin
-	data_x_reg <= data_x/8;
-	data_y_reg <= data_y/8;
-	data_z_reg <= data_z/8;
+	data_x_reg <= data_x;
+	data_y_reg <= data_y;
+	data_z_reg <= data_z;
 end
+
+convertidor conv(
+    .clk(MAX10_CLK1_50),
+    .rst(rst_n),
+    .data_x_reg(data_x),
+    .data_y_reg(data_y),
+    .data_z_reg(data_z),
+    .out_x(ARDUINO_IO[0]),
+    .out_y(ARDUINO_IO[1]),
+    .out_z(ARDUINO_IO[2])
+);
 
 wire [3:0] unidades_x = data_x_reg %10;
 wire [3:0] decenas_x = (data_x_reg/10)%10;
