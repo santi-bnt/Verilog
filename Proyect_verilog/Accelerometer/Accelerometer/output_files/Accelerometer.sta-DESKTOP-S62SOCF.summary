@@ -1,0 +1,137 @@
+------------------------------------------------------------
+Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow 1200mV 85C Model Setup 'rst_a'
+Slack : -2.533
+TNS   : -104.228
+
+Type  : Slow 1200mV 85C Model Setup 'Data_address[0]'
+Slack : -2.105
+TNS   : -77.738
+
+Type  : Slow 1200mV 85C Model Setup 'clk'
+Slack : -1.738
+TNS   : -2.332
+
+Type  : Slow 1200mV 85C Model Hold 'rst_a'
+Slack : -0.304
+TNS   : -0.418
+
+Type  : Slow 1200mV 85C Model Hold 'Data_address[0]'
+Slack : -0.018
+TNS   : -0.021
+
+Type  : Slow 1200mV 85C Model Hold 'clk'
+Slack : 0.751
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Recovery 'clk'
+Slack : -2.335
+TNS   : -22.529
+
+Type  : Slow 1200mV 85C Model Removal 'clk'
+Slack : 1.547
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clk'
+Slack : -3.000
+TNS   : -18.433
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'rst_a'
+Slack : -3.000
+TNS   : -15.445
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'Data_address[0]'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Slow 1200mV 0C Model Setup 'rst_a'
+Slack : -2.398
+TNS   : -96.894
+
+Type  : Slow 1200mV 0C Model Setup 'Data_address[0]'
+Slack : -1.969
+TNS   : -71.005
+
+Type  : Slow 1200mV 0C Model Setup 'clk'
+Slack : -1.598
+TNS   : -2.231
+
+Type  : Slow 1200mV 0C Model Hold 'rst_a'
+Slack : -0.290
+TNS   : -0.452
+
+Type  : Slow 1200mV 0C Model Hold 'Data_address[0]'
+Slack : -0.006
+TNS   : -0.006
+
+Type  : Slow 1200mV 0C Model Hold 'clk'
+Slack : 0.744
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Recovery 'clk'
+Slack : -2.075
+TNS   : -19.968
+
+Type  : Slow 1200mV 0C Model Removal 'clk'
+Slack : 1.539
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clk'
+Slack : -3.000
+TNS   : -18.433
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'rst_a'
+Slack : -3.000
+TNS   : -10.158
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'Data_address[0]'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Fast 1200mV 0C Model Setup 'rst_a'
+Slack : -0.934
+TNS   : -28.304
+
+Type  : Fast 1200mV 0C Model Setup 'Data_address[0]'
+Slack : -0.792
+TNS   : -20.275
+
+Type  : Fast 1200mV 0C Model Setup 'clk'
+Slack : -0.691
+TNS   : -0.691
+
+Type  : Fast 1200mV 0C Model Hold 'rst_a'
+Slack : -0.173
+TNS   : -0.173
+
+Type  : Fast 1200mV 0C Model Hold 'clk'
+Slack : 0.099
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'Data_address[0]'
+Slack : 0.127
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Recovery 'clk'
+Slack : -1.076
+TNS   : -10.541
+
+Type  : Fast 1200mV 0C Model Removal 'clk'
+Slack : 0.517
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'rst_a'
+Slack : -3.000
+TNS   : -14.919
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clk'
+Slack : -3.000
+TNS   : -14.169
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'Data_address[0]'
+Slack : -3.000
+TNS   : -7.671
+
+------------------------------------------------------------

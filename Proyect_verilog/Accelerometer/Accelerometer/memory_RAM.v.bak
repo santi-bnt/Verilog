@@ -1,0 +1,13 @@
+module memory_RAM #(parameter NBits = 32, NAddr = 4)(
+
+	input clk, rst_a,
+	input [NBits - 1 : 0] Data_in,
+	input [NAddr - 1 : 0] Data_address,
+	
+	output reg [NBits - 1 : 0] Data_out
+
+);
+
+
+
+endmodule 
