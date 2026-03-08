@@ -1,4 +1,4 @@
-# mini_challenge2
+# Mini_challenge_2
 
 ## Overview
 
