@@ -46,4 +46,5 @@ assign VGA_VS = vsync;
 assign HEX0 = {1, seg1};
 assign HEX1 = {1, seg2};
 
+
 endmodule
