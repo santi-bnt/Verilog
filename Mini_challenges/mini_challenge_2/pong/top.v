@@ -2,6 +2,7 @@
 
 module top (
 	input clk, reset, button, button1, button2, button3,
+	input uart_rx,
 	output [11:0] rgb,
 	output hsync, vsync, 
 	output [6:0] seg1, seg2
@@ -35,12 +36,22 @@ module top (
 	paddle p1	(.clk_1ms(clk_1ms), .reset(reset), .x(x), .y(y),
 					 .button(button), .button1(button1),  .button2(button2), .button3(button3),
 					.paddle1_on(paddle1_on), .rgb_paddle1(rgb_paddle1), .paddle2_on(paddle2_on), .rgb_paddle2(rgb_paddle2),
-					.x_paddle1(x_paddle1), .x_paddle2(x_paddle2), .y_paddle1(y_paddle1), .y_paddle2(y_paddle2) );
+					.x_paddle1(x_paddle1), .x_paddle2(x_paddle2), .y_paddle1(y_paddle1), .y_paddle2(y_paddle2), .uart_x(data_out));
+
 
 	game_state(.clk(clk), .clk_1ms(clk_1ms), .reset(reset), .p1_score(p1_score), .p2_score(p2_score), .game_state(game_state));
 	
 	seven_seg (.clk(clk), .clk_1ms(clk_1ms), .reset(reset), .p1_score(p1_score), .p2_score(p2_score), .seg1(seg1), .seg2(seg2));
 	
+	wire [7:0] data_out;
+	wire data_ready;
+
+	UART_Rx #(.BAUD_RATE(9600), .CLOCK_FREQ(50000000), .BITS(8)) UART_RX (
+    .clk(clk),
+    .rst(reset),
+    .rx_in(uart_rx),
+    .data_out(data_out),
+    .data_ready(data_ready)
+	);
 	
 endmodule
-
